@@ -19,7 +19,18 @@ create table osoba(
 
 alter table osoba add foreign key (galerija) references galerija(sifra);
 
-select * from osoba;
+select * from galerija;
 
 insert into galerija (naziv, opis, cijena)
 values
+('Apolon','Skulptura','15'),
+('Luka','Namjestaja','20'),
+('Divila','Zivotinja','10');
+
+insert into osoba (ime, prezime, galerija)
+values
+('Bojan','Drezgić','2'),
+('Bojan','Bole','3'),
+('Drezgić','Drezga','1');
+
+select * from osoba;
