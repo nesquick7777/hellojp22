@@ -3,10 +3,19 @@ drop database if exists music;
 create database music;
 use music;
 
-#IMPLEMENTIRATI modul kasnije
 create table dopuštenje(
     sifra int not null primary key auto_increment,
     uloga int not null
+);
+
+create table modul(
+    sifra int not null primary key auto_increment,
+    dopuštenje int not null,
+    mozeocjenjivati varchar(50) not null,
+    mozedodavatidatu varchar(50) not null,
+    mozebanovatikorisnike varchar(50) not null,
+    mozedodavatimoderatore varchar(50) not null,
+    mozebrisatimoderatore varchar(50) not null
 );
 
 create table uloga(
@@ -81,6 +90,8 @@ alter table uloga add foreign key (korisnik) references korisnik(sifra);
 
 alter table dopuštenje add foreign key (uloga) references uloga(sifra);
 
+alter table modul add foreign key (dopuštenje) references dopuštenje(sifra);
+
 alter table band add foreign key (žanr) references žanr(sifra);
 alter table band add foreign key (diskografija) references diskografija(sifra);
 
@@ -101,3 +112,26 @@ alter table singl add foreign key (žanr) references žanr(sifra);
 #select * from band;
 #select * from diskografija;
 #select * from žanr;
+
+
+
+
+insert into osoba (prezime, ime, email)
+values
+('Bojan','Drezgic','nesquick7777@gmail.com');
+
+
+insert into korisnik (osoba, username, lozinka)
+values
+(1,'Nesquick7777','q1w2e3r4');
+
+insert into uloga (korisnik, ime, opis)
+values
+(1,'Admin','Upravlja infrastrukturom web stranice');
+
+insert into dopuštenje (uloga)
+values
+(1);
+
+
+
