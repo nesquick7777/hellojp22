@@ -5,12 +5,7 @@ use music;
 
 create table dopuštenje(
     sifra int not null primary key auto_increment,
-    uloga int not null
-);
-
-create table modul(
-    sifra int not null primary key auto_increment,
-    dopuštenje int not null,
+    uloga int not null,
     mozeocjenjivati varchar(50) not null,
     mozedodavatidatu varchar(50) not null,
     mozebanovatikorisnike varchar(50) not null,
@@ -20,16 +15,16 @@ create table modul(
 
 create table uloga(
     sifra int not null primary key auto_increment,
-    korisnik int not null,
     ime varchar(50) not null,
     opis varchar(50) not null
 );
 
 create table korisnik(
     sifra int not null primary key auto_increment,
-    osoba int not null,
     username varchar(50) not null,
-    lozinka varchar(50) not null
+    lozinka varchar(50) not null,
+    uloga int not null,
+    osoba int not null
     
 );
 
@@ -84,13 +79,10 @@ datumsingla datetime,
 #create table top100
 
 
+alter table korisnik add foreign key (uloga) references uloga(sifra);
 alter table korisnik add foreign key (osoba) references osoba(sifra);
 
-alter table uloga add foreign key (korisnik) references korisnik(sifra);
-
 alter table dopuštenje add foreign key (uloga) references uloga(sifra);
-
-alter table modul add foreign key (dopuštenje) references dopuštenje(sifra);
 
 alter table band add foreign key (žanr) references žanr(sifra);
 alter table band add foreign key (diskografija) references diskografija(sifra);
@@ -115,23 +107,31 @@ alter table singl add foreign key (žanr) references žanr(sifra);
 
 
 
-
 insert into osoba (prezime, ime, email)
 values
-('Bojan','Drezgic','nesquick7777@gmail.com');
+('Bojan','Drezgic','nesquick7777@gmail.com'),
+('Bole','Drezga','nesquick77777@gmail.com'),
+('Bojan','Borić','nesquick777777@gmail.com');
 
-
-insert into korisnik (osoba, username, lozinka)
+insert into uloga (ime, opis)
 values
-(1,'Nesquick7777','q1w2e3r4');
+('Admin','Upravlja infrastrukturom web stranice'),
+('Moderator','Odobrava promjene, banuje ljude'),
+('Korisnik','Ocjenjuje, predlaže promjene');
 
-insert into uloga (korisnik, ime, opis)
+insert into dopuštenje (uloga,mozeocjenjivati,mozedodavatidatu,mozebanovatikorisnike,mozedodavatimoderatore,mozebrisatimoderatore)
 values
-(1,'Admin','Upravlja infrastrukturom web stranice');
+(1,'TRUE','TRUE','TRUE','TRUE','TRUE'),
+(2,'TRUE','TRUE','TRUE','FALSE','FALSE'),
+(3,'TRUE','TRUE','FALSE','FALSE','FALSE');
 
-insert into dopuštenje (uloga)
+insert into korisnik (osoba,uloga, username, lozinka)
 values
-(1);
+(1,1,'Nesquick7777','q1w2e3r4'),
+(2,3,'Nesquick77777','1234'),
+(3,2,'Nesquick777777','4321');
+
+
 
 
 
