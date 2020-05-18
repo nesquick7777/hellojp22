@@ -16,7 +16,8 @@ create table dopuštenje(
 create table uloga(
     sifra int not null primary key auto_increment,
     ime varchar(50) not null,
-    opis varchar(50) not null
+    opis varchar(50) not null,
+    dopuštenje int
 );
 
 create table korisnik(
@@ -89,6 +90,8 @@ alter table korisnik add foreign key (osoba) references osoba(sifra);
 
 alter table dopuštenje add foreign key (uloga) references uloga(sifra);
 
+alter table uloga add foreign key (dopuštenje) references dopuštenje(sifra);
+
 alter table umjetnik add foreign key (žanr) references žanr(sifra);
 alter table umjetnik add foreign key (diskografija) references diskografija(sifra);
 
@@ -119,6 +122,7 @@ values
 (1,'TRUE','TRUE','TRUE','TRUE','TRUE'),
 (2,'TRUE','TRUE','TRUE','FALSE','FALSE'),
 (3,'TRUE','TRUE','FALSE','FALSE','FALSE');
+update uloga set dopuštenje = 1 where sifra =1;
 
 insert into korisnik (osoba,uloga, username, lozinka)
 values
