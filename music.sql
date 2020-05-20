@@ -8,72 +8,84 @@ create table umjetnik(
 sifra int not null primary key auto_increment,
 ime varchar(50) not null,
 žanr int not null,
-diskografija int,
 mjesto varchar(50) not null,
-datumpocetka int,
+datumpocetka int not null,
 datumkraja int
 );
 
 create table žanr(
 sifra int not null primary key auto_increment,
-naziv varchar(50)
+naziv varchar(50) not null
 );
 
-create table diskografija(
-sifra int not null primary key auto_increment,
-umjetnik int not null,
-singl int,
-album int
-);
-
-#Implementirati kasnije izdavačku kuću
 create table album(
 sifra int not null primary key auto_increment,
-ime varchar(50),
+ime varchar(50) not null,
 srednjaocjena decimal(18,2),
-datumalbuma int,
+datumalbuma int not null,
 žanr int not null,
-diskografija int
+umjetnik int not null,
+izdavačkakuća int
 );
 
-#Implementirati kasnije izdavačku kuću
 create table singl(
 sifra int not null primary key auto_increment,
-ime varchar(50),
+ime varchar(50) not null,
 srednjaocjena decimal(18,2),
-datumsingla int,
+datumsingla int not null,
 žanr int not null,
-diskografija int
+umjetnik int not null,
+izdavačkakuća int
 );
 
+create table EP(
+sifra int not null primary key auto_increment,
+ime varchar(50) not null,
+srednjaocjena decimal(18,2),
+datumEP int not null,
+žanr int not null,
+umjetnik int not null,
+izdavačkakuća int
+);
 
+create table izdavačkakuća(
+sifra int not null primary key auto_increment,
+naziv varchar(50) not null
+);
 
+create table član(
+sifra int not null primary key auto_increment,
+ime varchar(50) not null,
+prezime varchar(50) not null,
+datumr decimal(18,2),
+mjestor varchar(50) not null,
+datump decimal(18,2),
+mjestop varchar(50) not null,
+umjetnik int not null,
+bilješke varchar(50) not null
+);
 
 #create table top100
 
 
 alter table umjetnik add foreign key (žanr) references žanr(sifra);
-alter table umjetnik add foreign key (diskografija) references diskografija(sifra);
 
-alter table diskografija add foreign key (album) references album(sifra);
-alter table diskografija add foreign key (singl) references singl(sifra);
-alter table diskografija add foreign key (umjetnik) references umjetnik(sifra);
+alter table član add foreign key (umjetnik) references umjetnik(sifra);
 
 alter table album add foreign key (žanr) references žanr(sifra);
-alter table album add foreign key (diskografija ) references diskografija(sifra);
+alter table album add foreign key (umjetnik) references umjetnik(sifra);
+alter table album add foreign key (izdavačkakuća) references izdavačkakuća(sifra);
 
 alter table singl add foreign key (žanr) references žanr(sifra);
-alter table singl add foreign key (diskografija ) references diskografija(sifra);
+alter table singl add foreign key (umjetnik) references umjetnik(sifra);
+alter table singl add foreign key (izdavačkakuća) references izdavačkakuća(sifra);
+
+alter table EP add foreign key (žanr) references žanr(sifra);
+alter table EP add foreign key (umjetnik) references umjetnik(sifra);
+alter table EP add foreign key (izdavačkakuća) references izdavačkakuća(sifra);
 
 
-insert into uloga (ime, opis)
-values
-('Admin','Upravlja infrastrukturom web stranice'),
-('Moderator','Odobrava promjene, banuje ljude'),
-('Korisnik','Ocjenjuje, predlaže promjene');
-
-
-insert into žanr(ime) 
+insert into žanr(naziv) 
 values
 ('Rock'),
 ('Pop'),
@@ -86,33 +98,28 @@ values
 ('Soundtrack');
 
 
-insert into umjetnik (ime,žanr,diskografija,mjesto,datumpocetka,datumkraja)
+insert into umjetnik (ime,žanr,mjesto,datumpocetka,datumkraja)
 values
-('David Bowie',1,null,'England',1964,2016);
+('David Bowie',1,'England',1964,2016);
 
-insert into album (ime,srednjaocjena,datumalbuma,žanr,diskografija)
+insert into album (ime,srednjaocjena,datumalbuma,žanr,umjetnik)
 values
-('Heroes',4.5,1977,1,null),
-('Heroes',4.5,1977,1,null),
-('Heroes',4.5,1977,1,null);
+('Heroes',4.5,1977,1,1);
 
-insert into singl (ime,srednjaocjena,datumsingla,žanr,diskografija)
+insert into singl (ime,srednjaocjena,datumsingla,žanr,umjetnik)
 values
-('Life on Mars',4.4,1972,1,null),
-('Life on Mars',4.4,1972,1,null),
-('Life on Mars',4.4,1972,1,null);
+('Life on Mars',4.4,1973,1,1);
 
-insert into diskografija (umjetnik,singl)
-select 1,sifra from singl;
-update diskografija set album =sifra where umjetnik =1;
+insert into EP (ime,srednjaocjena,datumEP,žanr,umjetnik)
+values
+('Starman',4.3,1972,1,1);
 
-#select * from osoba;
-#select * from korisnik;
-#select * from uloga;
-#select * from dopuštenje;
+
 #select * from album;
 #select * from singl;
 #select * from umjetnik;
-#select * from diskografija;
 #select * from žanr;
+#select * from ep;
+#select * from izdavačkakuća;
+#select * from član;
 
