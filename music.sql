@@ -90,6 +90,12 @@ insert into clan (ime, prezime,datumr,mjestor,datump,mjestop,umjetnik,biljeske)
 values
 ('David', 'Bowie','1947-01-08', 'Brixton','2016-01-10','Manhattan',1,'Married to Angela Bowie [1970-80] and Iman [1992-2016], father of Duncan Jones')
 
+select * from album
+where zanr = 'Rock';
+
+select a.ime, a.prezime, b.ime as umjetnik
+from clan as a, umjetnik b
+where a.sifra=a.umjetnik;
 
 #select * from album;
 #select * from singl;
