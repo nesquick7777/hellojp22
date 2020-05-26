@@ -72,11 +72,13 @@ alter table EP add foreign key (umjetnik) references umjetnik(sifra);
 
 insert into umjetnik (ime,zanr,podzanr,mjesto,datumpocetka,datumkraja)
 values
-('David Bowie','Rock','Art Rock','England',1964,2016);
+('David Bowie','Rock','Art Rock','England',1964,2016),
+('Bob Dylan','Rock','Folk Rock','USA',1959,null);
 
 insert into album (ime,ocjena,datumalbuma,zanr,podzanr,umjetnik,izdavackakuca)
 values
-('Heroes',4.5,1977,'Rock','Art Rock',1,'RCA Records');
+('Heroes',4.5,1977,'Rock','Art Rock',1,'RCA Records'),
+('Highway 61 Revisited',4.4,1965,'Rock','Folk Rock',2,'Columbia Records');
 
 insert into singl (ime,ocjena,datumsingla,zanr,podzanr,umjetnik,izdavackakuca)
 values
@@ -88,14 +90,14 @@ values
 
 insert into clan (ime, prezime,datumr,mjestor,datump,mjestop,umjetnik,biljeske)
 values
-('David', 'Bowie','1947-01-08', 'Brixton','2016-01-10','Manhattan',1,'Married to Angela Bowie [1970-80] and Iman [1992-2016], father of Duncan Jones')
+('David', 'Bowie','1947-01-08', 'Brixton','2016-01-10','Manhattan',1,'Married to Angela Bowie [1970-80] and Iman [1992-2016], father of Duncan Jones');
 
 select * from album
 where zanr = 'Rock';
 
 select a.ime, a.prezime, b.ime as umjetnik
-from clan as a, umjetnik b
-where a.sifra=a.umjetnik;
+from clan a
+left join umjetnik b on b.sifra=a.umjetnik;
 
 #select * from album;
 #select * from singl;
